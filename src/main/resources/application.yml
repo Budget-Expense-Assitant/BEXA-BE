@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: bexa-be
+  mvc:
+    problemdetails:
+      enabled: false
+  mongodb:
+    uri: mongodb://localhost:27017/bexadb
+  web:
+    error:
+      include-message: always
+      include-stacktrace: never
