@@ -2,9 +2,7 @@ package de.bexa.user.boundary;
 
 import de.bexa.user.boundary.dto.UserRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/v1/users")
 public interface UserApi {
@@ -13,4 +11,7 @@ public interface UserApi {
 
     @PostMapping("/login")
     ResponseEntity<?> loginUser(@RequestBody UserRequest userRequest);
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<Void> deleteUserById(@PathVariable String id);
 }
