@@ -11,13 +11,13 @@ import org.springframework.web.server.ResponseStatusException;
 public class GlobalExceptionHandler {
     @ExceptionHandler(ResponseStatusException.class)
     public void handleResponseStatusException(ResponseStatusException ex) {
-        log.warn(ex.getMessage());
+        LOGGER.warn(ex.getMessage());
         throw ex;
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseStatusException handleAllOtherExceptions(Exception ex) {
-        log.error("Unexpected exception: {}", ex.getMessage(), ex);
+        LOGGER.error("Unexpected exception: {}", ex.getMessage(), ex);
         return new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, GeneralErrorMessages.GENERAL_ERROR);
     }
 }
