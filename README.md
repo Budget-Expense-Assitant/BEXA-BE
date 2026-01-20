@@ -48,6 +48,6 @@ src/main/resources/application.properties
 
 Beispiel:
 
-spring.data.mongodb.uri=mongodb://localhost:27017/bexa
+spring.data.mongodb.uri=mongodb://localhost:27017/bexadb
 server.port=8080
 ```
