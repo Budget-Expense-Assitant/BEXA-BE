@@ -6,6 +6,7 @@ import de.bexa.user.boundary.dto.UserRequest;
 import de.bexa.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -15,6 +16,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public User createUser(UserRequest userRequest) {
         if (userRepository.findAll().stream().anyMatch(user -> user.getUserName().equalsIgnoreCase(userRequest.getUserName()))) {
@@ -23,7 +25,7 @@ public class UserService {
 
         User user = User.builder()
                 .userName(userRequest.getUserName())
-                .password(userRequest.getPassword())
+                .password(passwordEncoder.encode(userRequest.getPassword()))
                 .createdAt(new Date())
                 .build();
         userRepository.save(user);
