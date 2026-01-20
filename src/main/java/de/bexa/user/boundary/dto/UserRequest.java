@@ -1,5 +1,6 @@
 package de.bexa.user.boundary.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Data
@@ -7,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRequest {
-    private String userName;
+    private String username;
     private String password;
 }

@@ -19,12 +19,13 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public User createUser(UserRequest userRequest) {
-        if (userRepository.findAll().stream().anyMatch(user -> user.getUserName().equalsIgnoreCase(userRequest.getUserName()))) {
+        if (userRepository.findAll().stream().anyMatch(user -> user.getUsername().equalsIgnoreCase(userRequest.getUsername()))) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, UserErrorMessages.USER_ALREADY_EXISTS);
         }
 
+
         User user = User.builder()
-                .userName(userRequest.getUserName())
+                .username(userRequest.getUsername())
                 .password(passwordEncoder.encode(userRequest.getPassword()))
                 .createdAt(new Date())
                 .build();

@@ -22,7 +22,7 @@ public class User {
 
     @Size(min = 3, message = UserErrorMessages.USERNAME_TOO_SHORT)
     @Size(max = 20, message = UserErrorMessages.USERNAME_TOO_LONG)
-    private String userName;
+    private String username;
 
     @Size(min = 3, message = UserErrorMessages.PASSWORD_TOO_SHORT)
     private String password;
