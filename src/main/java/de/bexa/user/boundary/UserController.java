@@ -1,6 +1,6 @@
 package de.bexa.user.boundary;
 
-import de.bexa.user.boundary.dto.UserCreationRequest;
+import de.bexa.user.boundary.dto.UserRequest;
 import de.bexa.user.control.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,12 @@ public class UserController implements UserApi {
     private final UserService userService;
 
     @Override
-    public ResponseEntity<?> createUser(UserCreationRequest userCreationRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userCreationRequest));
+    public ResponseEntity<?> createUser(UserRequest userRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userRequest));
+    }
+
+    @Override
+    public ResponseEntity<?> loginUser(UserRequest userRequest) {
+        return null;
     }
 }

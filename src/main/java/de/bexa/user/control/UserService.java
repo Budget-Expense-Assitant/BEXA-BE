@@ -2,7 +2,7 @@ package de.bexa.user.control;
 
 import de.bexa.errorMessages.UserErrorMessages;
 import de.bexa.repository.UserRepository;
-import de.bexa.user.boundary.dto.UserCreationRequest;
+import de.bexa.user.boundary.dto.UserRequest;
 import de.bexa.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,14 +16,14 @@ import java.util.Date;
 public class UserService {
     private final UserRepository userRepository;
 
-    public User createUser(UserCreationRequest userCreationRequest) {
-        if (userRepository.findAll().stream().anyMatch(user -> user.getUserName().equalsIgnoreCase(userCreationRequest.getUserName()))) {
+    public User createUser(UserRequest userRequest) {
+        if (userRepository.findAll().stream().anyMatch(user -> user.getUserName().equalsIgnoreCase(userRequest.getUserName()))) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, UserErrorMessages.USER_ALREADY_EXISTS);
         }
 
         User user = User.builder()
-                .userName(userCreationRequest.getUserName())
-                .password(userCreationRequest.getPassword())
+                .userName(userRequest.getUserName())
+                .password(userRequest.getPassword())
                 .createdAt(new Date())
                 .build();
         userRepository.save(user);
