@@ -17,17 +17,19 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<?> createUser(UserRequest userRequest) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userRequest.getUsername(), userRequest.getPassword()));
     }
 
     @Override
-    public ResponseEntity<?> loginUser(UserRequest userRequest) {
-        return null;
+    public ResponseEntity<String> loginUser(UserRequest userRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                userService.loginUser(userRequest.getUsername(), userRequest.getPassword())
+        );
     }
 
     @Override
-    public ResponseEntity<Void> deleteUserById(@PathVariable String id) {
-        userService.deleteUserById(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> deleteUserById(@PathVariable String userId) {
+        userService.deleteUserById(userId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

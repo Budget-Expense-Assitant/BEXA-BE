@@ -1,6 +1,7 @@
 package de.bexa.user.entity;
 
 import de.bexa.errorMessages.UserErrorMessages;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,11 +21,15 @@ public class User {
     @Id
     private String id;
 
+    @NotEmpty(message = UserErrorMessages.CANNOT_BE_NULL)
     @Size(min = 3, message = UserErrorMessages.USERNAME_TOO_SHORT)
     @Size(max = 20, message = UserErrorMessages.USERNAME_TOO_LONG)
     private String username;
 
+    @NotEmpty(message = UserErrorMessages.CANNOT_BE_NULL)
     @Size(min = 3, message = UserErrorMessages.PASSWORD_TOO_SHORT)
     private String password;
+
     private Date createdAt;
+    private Date lastLoginAt;
 }
