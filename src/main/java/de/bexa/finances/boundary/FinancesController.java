@@ -6,11 +6,12 @@ import de.bexa.finances.controller.FinanceService;
 import de.bexa.finances.entity.Finances;
 import de.bexa.finances.entity.financialitem.Expense;
 import de.bexa.finances.entity.financialitem.Income;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("*")
-@RequestMapping("/users/{userId}/finances")
 public class FinancesController implements FinancesApi {
 
     private final FinanceService financesService;
@@ -18,25 +19,46 @@ public class FinancesController implements FinancesApi {
     public FinancesController(FinanceService service) {
         this.financesService = service;
     }
-    @PostMapping("/income")
-    public Finances addIncome(@PathVariable String userId, @RequestBody IncomeRequest incomeDto) {
+
+    public ResponseEntity<Finances> addIncome(
+            @PathVariable String userId,
+            @RequestBody @Valid IncomeRequest incomeDto) {
+
         Income income = new Income();
-        income.setAmount(income.getAmount());
-        income.setSource(income.getSource());
-        return financesService.addIncome(userId, income);
-    }
-    @PostMapping("/expense")
-    public Finances addExpense(@PathVariable String userId, @RequestBody ExpenseRequest expenseDto) {
-        Expense expense = new Expense();
-        expense.setAmount(expenseDto.getAmount());
-        return financesService.addExpense(userId, expense);
+        income.setId(incomeDto.getId());
+        income.setAmount(incomeDto.getAmount());
+        income.setSource(incomeDto.getSource());
+        income.setDate(incomeDto.getDate());
+        income.setDescription(incomeDto.getDescription());
+        income.setRecurring(incomeDto.getRecurring());
+
+        if (Boolean.TRUE.equals(incomeDto.getRecurring())){
+            income.setIncomeStartDate(incomeDto.getIncomeStartDate());
+            income.setIncomeEndDate(incomeDto.getIncomeEndDate());
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(financesService.addIncome(userId, income));
     }
 
-    @GetMapping
+    public  ResponseEntity<Finances> addExpense(
+            @PathVariable String userId,
+            @RequestBody @Valid ExpenseRequest expenseDto) {
+        Expense expense = new Expense();
+        expense.setId(expenseDto.getId());
+        expense.setAmount(expenseDto.getAmount());
+        expense.setTarget(expenseDto.getTarget());
+        expense.setDate(expenseDto.getDate());
+        expense.setDescription(expenseDto.getDescription());
+        expense.setRecurring(expenseDto.getRecurring());
+        if (Boolean.TRUE.equals(expenseDto.getRecurring())){
+            expense.setExpenseStartDate(expenseDto.getExpenseStartDate());
+            expense.setExpenseEndDate(expenseDto.getExpenseEndDate());
+        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(financesService.addExpense(userId, expense));
+    }
+
     public Finances getFinances(@PathVariable String userId) {
         return financesService.getFinances(userId);
     }
-
 
 
 }
