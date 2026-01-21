@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class JwtService {
@@ -27,6 +28,10 @@ public class JwtService {
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MS))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public long getExpirationSeconds() {
+        return TimeUnit.MILLISECONDS.toSeconds(EXPIRATION_MS);
     }
 
     public String extractUsername(String token) {

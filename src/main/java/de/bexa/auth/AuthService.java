@@ -47,4 +47,8 @@ public class AuthService {
 
         return jwtService.generateToken(userDetails);
     }
+
+    public long getTokenTtlSeconds() {
+        return jwtService.getExpirationSeconds();
+    }
 }
