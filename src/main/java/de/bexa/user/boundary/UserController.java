@@ -21,13 +21,6 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<String> loginUser(UserRequest userRequest) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                userService.loginUser(userRequest.getUsername(), userRequest.getPassword())
-        );
-    }
-
-    @Override
     public ResponseEntity<Void> deleteUserById(@PathVariable String userId) {
         userService.deleteUserById(userId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

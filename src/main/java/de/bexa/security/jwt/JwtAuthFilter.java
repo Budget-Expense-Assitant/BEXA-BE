@@ -1,5 +1,6 @@
-package de.bexa.auth;
+package de.bexa.security.jwt;
 
+import de.bexa.security.user.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

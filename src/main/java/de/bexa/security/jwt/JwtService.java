@@ -1,4 +1,4 @@
-package de.bexa.auth;
+package de.bexa.security.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

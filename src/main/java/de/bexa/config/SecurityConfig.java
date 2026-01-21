@@ -1,10 +1,8 @@
 package de.bexa.config;
 
-import de.bexa.auth.JwtAuthFilter;
-import jakarta.servlet.http.HttpServletResponse;
+import de.bexa.security.jwt.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -24,7 +22,7 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/api/v1/users/login",
+                                "/api/v1/auth/login",
                                 "/api/v1/users/register"
                         ).permitAll()
                         .anyRequest().authenticated()

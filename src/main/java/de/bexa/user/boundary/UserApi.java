@@ -10,9 +10,6 @@ public interface UserApi {
     @PostMapping("/register")
     ResponseEntity<?> createUser(@Valid @RequestBody UserRequest userRequest);
 
-    @PostMapping("/login")
-    ResponseEntity<String> loginUser(@Valid @RequestBody UserRequest userRequest);
-
     @DeleteMapping("/{userId}")
     ResponseEntity<Void> deleteUserById(@PathVariable String userId);
 }

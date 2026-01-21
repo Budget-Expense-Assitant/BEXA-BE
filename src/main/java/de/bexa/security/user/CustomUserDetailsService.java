@@ -1,4 +1,4 @@
-package de.bexa.auth;
+package de.bexa.security.user;
 
 import de.bexa.errorMessages.UserErrorMessages;
 import de.bexa.repository.UserRepository;
