@@ -6,7 +6,7 @@ import de.bexa.finances.entity.Finances;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RequestMapping("/users/{userId}/finances")
+@RequestMapping("/api/v1/users/{userId}/finances")
 public interface FinancesApi {
     @PostMapping("/incomes")
     ResponseEntity<Finances> addIncome(@PathVariable String userId, @RequestBody IncomeRequest income);
