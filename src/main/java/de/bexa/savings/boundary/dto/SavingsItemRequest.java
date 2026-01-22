@@ -1,6 +1,6 @@
 package de.bexa.savings.boundary.dto;
 
-import de.bexa.savings.entity.SavingsItemTypes;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,15 +8,14 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class SavingsItemResponse {
-    private Integer id;
+@AllArgsConstructor
+public class SavingsItemRequest {
+    @NotEmpty
     private String name;
-    private SavingsItemTypes type;
-    private Double startAmount;
+    @NotEmpty
+    private Double startAmount = 0.0;
     private Double targetAmount;
     private Double savingsRate;
-    private String startDate;
     private String targetDate;
 }

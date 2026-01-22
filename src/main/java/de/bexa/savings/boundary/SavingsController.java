@@ -1,6 +1,7 @@
 package de.bexa.savings.boundary;
 
 import de.bexa.savings.boundary.dto.SavingsDocumentResponse;
+import de.bexa.savings.boundary.dto.SavingsItemRequest;
 import de.bexa.savings.boundary.dto.SavingsItemResponse;
 import de.bexa.savings.control.SavingsService;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +21,13 @@ public class SavingsController implements SavingsApi{
     }
 
     @Override
-    public ResponseEntity<SavingsItemResponse> addSavingsItem(String userId) {
-        return null;
+    public ResponseEntity<SavingsItemResponse> addSavingsItem(String userId, SavingsItemRequest savingsItemRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(savingsService.addSavingsItem(userId, savingsItemRequest));
     }
 
     @Override
     public ResponseEntity<List<SavingsItemResponse>> getAllSavingsItems(String userId) {
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(savingsService.getAllSavingsItems(userId));
     }
 
     @Override

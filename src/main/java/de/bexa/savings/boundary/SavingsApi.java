@@ -1,12 +1,10 @@
 package de.bexa.savings.boundary;
 
 import de.bexa.savings.boundary.dto.SavingsDocumentResponse;
+import de.bexa.savings.boundary.dto.SavingsItemRequest;
 import de.bexa.savings.boundary.dto.SavingsItemResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,7 +14,7 @@ public interface SavingsApi {
     ResponseEntity<SavingsDocumentResponse> getSavingsDocument(@PathVariable String userId);
 
     @PostMapping("/items")
-    ResponseEntity<SavingsItemResponse> addSavingsItem(@PathVariable String userId);
+    ResponseEntity<SavingsItemResponse> addSavingsItem(@PathVariable String userId, @RequestBody SavingsItemRequest savingsItemRequest);
 
     @GetMapping("/items")
     ResponseEntity<List<SavingsItemResponse>> getAllSavingsItems(@PathVariable String userId);

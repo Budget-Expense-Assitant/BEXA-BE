@@ -1,6 +1,6 @@
 package de.bexa.savings.entity;
 
-public enum SavingTypes {
+public enum SavingsItemTypes {
     GOAL,
     AMOUNT,
     DATE
