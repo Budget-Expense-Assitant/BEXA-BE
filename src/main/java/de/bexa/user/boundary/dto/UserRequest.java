@@ -19,4 +19,5 @@ public class UserRequest {
     @NotEmpty(message = UserErrorMessages.CANNOT_BE_NULL)
     @Size(min = 3, message = UserErrorMessages.PASSWORD_TOO_SHORT)
     private String password;
+    private String currentPassword;
 }

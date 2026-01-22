@@ -9,6 +9,10 @@ public class UserErrorMessages {
     public static final String USERNAME_TOO_SHORT = "Der Benutzername ist zu kurz";
     public static final String USERNAME_TOO_LONG = "Der Benutzername ist zu lang";
     public static final String CANNOT_BE_NULL = "Benutzername oder Passwort darf nicht null sein";
+    public static final String USERNAME_CANNOT_BE_EMPTY = "Der Benutzername darf nicht leer sein.";
+    public static final String PASSWORD_CANNOT_BE_EMPTY = "Das Passwort darf nicht leer sein.";
+    public static final String CURRENT_PASSWORD_CANNOT_BE_EMPTY = "Das aktuelle Passwort darf nicht leer sein.";
+    public static final String CURRENT_PASSWORD_INCORRECT = "Das aktuelle Passwort ist falsch.";
 
     public static String USER_NOT_FOUND(String username){
         return "Benutzer " + username + " nicht gefunden";

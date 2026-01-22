@@ -6,4 +6,5 @@ public class IncomeErrorMessages {
     public static final String INCOME_SOURCE_NOT_GIVEN = "Quelle der Einnahme nicht gegeben!";
     public static final String INCOME_RECURRING_STATE = "Sie müssen angeben, ob die Einnahme wiederkehrbar ist!";
     public static final String INCOME_DESCRIPTION = "Sie müssen eine Beschreibung der Einnahme angeben!";
+    public static final String INCOME_NOT_FOUND = "Einnahme nicht gefunden!";
 }
