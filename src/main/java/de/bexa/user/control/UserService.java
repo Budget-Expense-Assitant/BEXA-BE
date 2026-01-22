@@ -1,7 +1,9 @@
 package de.bexa.user.control;
 
 import de.bexa.errorMessages.UserErrorMessages;
+import de.bexa.repository.SavingsRepository;
 import de.bexa.repository.UserRepository;
+import de.bexa.savings.entity.Savings;
 import de.bexa.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import java.util.Date;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final SavingsRepository savingsRepository;
 
     public User createUser(String username, String password) {
         if (userRepository.findAll().stream().anyMatch(user -> user.getUsername().equalsIgnoreCase(username))) {
@@ -28,6 +31,12 @@ public class UserService {
                 .createdAt(new Date())
                 .build();
         userRepository.save(user);
+
+        Savings savingsDocument = Savings.builder()
+                .userId(userRepository.findByUsername(username).get().getId())
+                .items(new java.util.ArrayList<>())
+                .build();
+        savingsRepository.save(savingsDocument);
 
         return user;
     }
