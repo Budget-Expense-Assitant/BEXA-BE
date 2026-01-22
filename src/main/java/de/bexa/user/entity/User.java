@@ -30,6 +30,8 @@ public class User {
     @Size(min = 3, message = UserErrorMessages.PASSWORD_TOO_SHORT)
     private String password;
 
+
+
     private Date createdAt;
     private Date lastLoginAt;
 }
