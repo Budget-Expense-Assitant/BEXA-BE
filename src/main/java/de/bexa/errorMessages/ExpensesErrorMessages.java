@@ -6,4 +6,5 @@ public class ExpensesErrorMessages {
     public static final String EXPENSE_TARGET_NOT_GIVEN = "Ziel der Ausgabe nicht gegeben!";
     public static final String EXPENSE_RECURRING_STATE = "Sie müssen angeben, ob die Ausgabe wiederkehrbar ist!";
     public static final String EXPENSE_DESCRIPTION = "Sie müssen eine Beschreibung der Ausgabe angeben!";
+    public static final String EXPENSE_NOT_FOUND = "Ausgabe nicht gefunden!";
 }
