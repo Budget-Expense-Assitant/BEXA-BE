@@ -41,4 +41,18 @@ public class AuthController implements AuthApi {
                         .userId(userRepository.findByUsername(loginRequest.getUsername()).get().getId())
                         .build());
     }
+
+    @Override
+    public ResponseEntity<Void> logoutUser() {
+        ResponseCookie deleteCookie = ResponseCookie.from("jwt", "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .sameSite("Lax")
+                .maxAge(0)
+                .build();
+        return ResponseEntity.status(HttpStatus.OK)
+                .header(HttpHeaders.SET_COOKIE, deleteCookie.toString())
+                .build();
+    }
 }

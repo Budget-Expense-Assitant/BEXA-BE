@@ -12,4 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface AuthApi {
     @PostMapping("/login")
     ResponseEntity<LoginResponse> loginUser(@Valid @RequestBody LoginRequest loginRequest);
+
+    @PostMapping("/logout")
+    ResponseEntity<Void> logoutUser();
 }
