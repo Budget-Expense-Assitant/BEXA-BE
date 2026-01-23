@@ -6,6 +6,8 @@ import de.bexa.finances.entity.Finances;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RequestMapping("/api/v1/users/{userId}/finances")
 public interface FinancesApi {
     @PostMapping("/incomes")
@@ -28,4 +30,7 @@ public interface FinancesApi {
 
     @DeleteMapping("/expenses/{expenseId}")
     ResponseEntity<Finances> deleteExpense(@PathVariable String userId, @PathVariable long expenseId);
+
+    @GetMapping("/expenses/category-percentages")
+    ResponseEntity<Map<String, Double>> getExpenseCategoryPercentages(@PathVariable String userId);
 }

@@ -38,4 +38,6 @@ public class ExpenseRequest {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate expenseEndDate;
 
+    @NotNull(message = "Kategorie der Ausgabe muss angegeben werden!")
+    private String category;
 }

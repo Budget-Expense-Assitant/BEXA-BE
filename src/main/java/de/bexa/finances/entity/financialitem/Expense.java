@@ -3,11 +3,9 @@ package de.bexa.finances.entity.financialitem;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -30,4 +28,6 @@ public class Expense {
     private LocalDate expenseStartDate;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate expenseEndDate;
+    @NotNull
+    private String category;
 }

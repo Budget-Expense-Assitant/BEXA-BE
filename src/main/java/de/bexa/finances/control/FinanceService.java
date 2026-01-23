@@ -95,6 +95,7 @@ public class FinanceService {
         expense.setRecurring(updatedExpense.getRecurring());
         expense.setExpenseStartDate(updatedExpense.getExpenseStartDate());
         expense.setExpenseEndDate(updatedExpense.getExpenseEndDate());
+        expense.setCategory(updatedExpense.getCategory());
         return repo.save(finances);
     }
 

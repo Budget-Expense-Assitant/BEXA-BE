@@ -3,6 +3,7 @@ package de.bexa.finances.boundary;
 import de.bexa.finances.boundary.dto.ExpenseRequest;
 import de.bexa.finances.boundary.dto.IncomeRequest;
 import de.bexa.finances.control.FinanceService;
+import de.bexa.finances.control.ExpenseCategoryService;
 import de.bexa.finances.entity.Finances;
 import de.bexa.finances.entity.financialitem.Expense;
 import de.bexa.finances.entity.financialitem.Income;
@@ -15,11 +16,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @RestController
 @CrossOrigin("*")
 @RequiredArgsConstructor
 public class FinancesController implements FinancesApi {
     private final FinanceService financesService;
+    private final ExpenseCategoryService expenseCategoryService;
 
     private Income mapIncomeRequestToEntity(IncomeRequest incomeDto) {
         Income income = new Income();
@@ -54,6 +58,7 @@ public class FinancesController implements FinancesApi {
             expense.setExpenseStartDate(null);
             expense.setExpenseEndDate(null);
         }
+        expense.setCategory(expenseDto.getCategory());
         return expense;
     }
 
@@ -94,5 +99,14 @@ public class FinancesController implements FinancesApi {
     @Override
     public ResponseEntity<Finances> deleteExpense(@PathVariable String userId, @PathVariable long expenseId) {
         return ResponseEntity.ok(financesService.deleteExpense(userId, expenseId));
+    }
+
+    /**
+     * Gibt die prozentuale Verteilung der Ausgaben nach Kategorie für ein Kreisdiagramm zurück.
+     */
+    @Override
+    public ResponseEntity<Map<String, Double>> getExpenseCategoryPercentages(@PathVariable String userId) {
+        Map<String, Double> percentages = expenseCategoryService.getExpenseCategoryPercentages(userId);
+        return ResponseEntity.ok(percentages);
     }
 }
