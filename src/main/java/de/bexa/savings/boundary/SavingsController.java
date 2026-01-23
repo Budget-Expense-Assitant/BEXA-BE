@@ -32,6 +32,6 @@ public class SavingsController implements SavingsApi{
 
     @Override
     public ResponseEntity<SavingsItemResponse> getSavingsItemById(String userId, String itemId) {
-        return null;
+        return ResponseEntity.status(HttpStatus.OK).body(savingsService.getSavingsItemById(userId, itemId));
     }
 }

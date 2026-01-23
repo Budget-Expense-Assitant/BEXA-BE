@@ -2,6 +2,7 @@ package de.bexa.auth;
 
 import de.bexa.auth.dto.LoginRequest;
 import de.bexa.auth.dto.LoginResponse;
+import de.bexa.repository.UserRepository;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +20,7 @@ import java.time.Duration;
 @RequiredArgsConstructor
 public class AuthController implements AuthApi {
     private final AuthService authService;
+    private final UserRepository userRepository;
 
     @Override
     public ResponseEntity<LoginResponse> loginUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -36,6 +38,7 @@ public class AuthController implements AuthApi {
                 .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
                 .body(LoginResponse.builder()
                         .bearerToken(jwt)
+                        .userId(userRepository.findByUsername(loginRequest.getUsername()).get().getId())
                         .build());
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import java.util.List;
 public class SavingsService {
     private final UserRepository userRepository;
     private final SavingsRepository savingsRepository;
+    private final SavingsItemMapper savingsItemMapper;
 
     public SavingsDocumentResponse createSavingsDocument(String userId) {
         if (userRepository.findById(userId).isEmpty()) {
@@ -35,6 +37,7 @@ public class SavingsService {
 
         Savings savings = Savings.builder()
                 .userId(userId)
+                .items(new ArrayList<>())
                 .build();
 
         savingsRepository.save(savings);
@@ -63,12 +66,15 @@ public class SavingsService {
 
         validateSavingsItemRequest(savingsItemRequest);
 
+        if (savings.getItems() == null) {
+            savings.setItems(new ArrayList<>());
+        }
+
         SavingsItem newItem = SavingsItem.builder()
                 .id(getNextSavingsItemId(savings))
                 .name(savingsItemRequest.getName())
                 .type(setSavingsItemType(savingsItemRequest))
                 .startAmount(savingsItemRequest.getStartAmount() != null ? savingsItemRequest.getStartAmount() : 0.0)
-                .targetAmount(savingsItemRequest.getTargetAmount())
                 .targetAmount(savingsItemRequest.getTargetAmount())
                 .savingsRate(savingsItemRequest.getSavingsRate())
                 .startDate(new Date().toString())
@@ -78,16 +84,7 @@ public class SavingsService {
         savings.getItems().add(newItem);
         savingsRepository.save(savings);
 
-        return SavingsItemResponse.builder()
-                .id(newItem.getId())
-                .name(newItem.getName())
-                .type(newItem.getType())
-                .startAmount(newItem.getStartAmount())
-                .targetAmount(newItem.getTargetAmount())
-                .savingsRate(newItem.getSavingsRate())
-                .startDate(newItem.getStartDate())
-                .targetDate(newItem.getTargetDate())
-                .build();
+        return savingsItemMapper.toResponse(newItem);
     }
 
     public void validateSavingsItemRequest(SavingsItemRequest request) {
@@ -97,7 +94,12 @@ public class SavingsService {
     }
 
     public Integer getNextSavingsItemId(Savings savings) {
-        return savings.getItems().isEmpty() ? 1 : savings.getItems().stream()
+        List<SavingsItem> items = savings.getItems();
+        if (items == null || items.isEmpty()) {
+            return 1;
+        }
+
+        return items.stream()
                 .mapToInt(SavingsItem::getId)
                 .max()
                 .orElse(0) + 1;
@@ -114,6 +116,26 @@ public class SavingsService {
     }
 
     public List<SavingsItemResponse> getAllSavingsItems(String userId) {
-        return getSavingsDocument(userId).getSavingsItems();
+        Savings savings = savingsRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserErrorMessages.USER_SAVINGS_DOCUMENT_NOT_FOUND(userId)));
+
+        List<SavingsItem> items = savings.getItems();
+        if (items == null || items.isEmpty()) {
+            return List.of();
+        }
+
+        return savingsItemMapper.toResponseList(items);
+    }
+
+    public @Nullable SavingsItemResponse getSavingsItemById(String userId, String itemId) {
+        Savings savings = savingsRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, UserErrorMessages.USER_SAVINGS_DOCUMENT_NOT_FOUND(userId)));
+
+        SavingsItem item = savings.getItems().stream()
+                .filter(i -> i.getId().toString().equals(itemId))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Savings item with ID " + itemId + " not found."));
+
+        return savingsItemMapper.toResponse(item);
     }
 }
